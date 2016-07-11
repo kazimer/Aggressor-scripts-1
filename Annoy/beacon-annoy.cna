@@ -24,7 +24,7 @@ sub stopannoying {
   }
 }
 
-
+#aliases for command line action 
 alias annoy {
   startannoying($1);
 }
@@ -36,7 +36,7 @@ alias annoystatus {
   btask($1,@annoylist);
 }
 
-
+# do annoying stuff every 30s
 on heartbeat_30s {
 
 	foreach $bid (@annoylist) {
