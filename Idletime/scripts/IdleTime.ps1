@@ -1,3 +1,4 @@
+
 function IdleTime {
 
 # This snippet is from http://stackoverflow.com/a/15846912
@@ -47,7 +48,6 @@ namespace PInvoke.Win32 {
 
 #End snippet
 
-# 1st: How long is your computer currently idle?
 $idle_time = [PInvoke.Win32.UserInput]::IdleTime;
 Write-Host ("Idle for " + $idle_time);
 }
