@@ -1,0 +1,5 @@
+alias idletime {
+
+	bpowershell_import($1,script_resource("scripts/IdleTime.ps1"));
+	bpowershell($1,"IdleTime");
+}
