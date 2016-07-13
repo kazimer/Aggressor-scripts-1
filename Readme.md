@@ -1,4 +1,8 @@
-A Few random scripts for Cobaltstrike 3.x using the Aggressor scripting language.
+#Aggressor Scripts
+
+A few scripts for Cobaltstrike 3.x 
+
+
 
 
 
