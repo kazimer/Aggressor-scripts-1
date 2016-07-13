@@ -2,8 +2,10 @@
 
 A few scripts for Cobaltstrike 3.x 
 
-###Annoy
-###Ps-Highlight
+####Annoy
+####Ps-Highlight
+####Idletime
+####Watchlist
 
 
 
