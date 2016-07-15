@@ -62,11 +62,10 @@ alias dropads {
         return;
     	}
 
-
 	$user = binfo($1,"user");
 	$temphome = %bvars[$1]["TEMP"];
 
-	#if($temphome = null) { return };
+	#if($temphome = $null) { return };
 
 	$windir = %bvars[$1]["windir"];
 
