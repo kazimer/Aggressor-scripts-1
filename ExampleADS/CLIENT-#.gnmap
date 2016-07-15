@@ -1,5 +1,0 @@
-# Nmap 7.12 scan initiated Fri Jul 15 12:47:39 2016 as: nmap -Pn -n -sS -p 21-23,25,53,111,137,139,445,80,443,8443,8080 --min-hostgroup 255 --min-rtt-timeout 0ms --max-rtt-timeout 100ms --max-retries 1 --max-scan-delay 0 --min-rate 6000 -oA CLIENT-# -vvv --open 192.168.0.1-254
-# Ports scanned: TCP(13;21-23,25,53,80,111,137,139,443,445,8080,8443) UDP(0;) SCTP(0;) PROTOCOLS(0;)
-Host: 192.168.0.7 ()	Status: Up
-Host: 192.168.0.7 ()	Ports: 80/open/tcp//http///, 111/open/tcp//rpcbind///, 443/open/tcp//https///	Ignored State: closed (10)
-# Nmap done at Fri Jul 15 12:47:40 2016 -- 254 IP addresses (3 hosts up) scanned in 0.64 seconds
