@@ -3,11 +3,6 @@
 # request environment variables for every new Beacon that comes in.
 on beacon_initial {
 
-	## uncomment these lines if you are not 
-	## calling beacon init from another script
-	## set needs to be called so that enviroment variables can 
-	## worked with.
-
         bshell($1, "set");
 	bsleep($1,0);
 }

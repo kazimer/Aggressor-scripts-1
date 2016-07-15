@@ -1,0 +1,13 @@
+# Nmap 7.12 scan initiated Fri Jul 15 12:47:39 2016 as: nmap -Pn -n -sS -p 21-23,25,53,111,137,139,445,80,443,8443,8080 --min-hostgroup 255 --min-rtt-timeout 0ms --max-rtt-timeout 100ms --max-retries 1 --max-scan-delay 0 --min-rate 6000 -oA CLIENT-# -vvv --open 192.168.0.1-254
+Nmap scan report for 192.168.0.7
+Host is up, received user-set (0.000013s latency).
+Scanned at 2016-07-15 12:47:40 BST for 0s
+Not shown: 10 closed ports
+Reason: 10 resets
+PORT    STATE SERVICE REASON
+80/tcp  open  http    syn-ack ttl 64
+111/tcp open  rpcbind syn-ack ttl 64
+443/tcp open  https   syn-ack ttl 64
+
+Read data files from: /usr/bin/../share/nmap
+# Nmap done at Fri Jul 15 12:47:40 2016 -- 254 IP addresses (3 hosts up) scanned in 0.64 seconds
