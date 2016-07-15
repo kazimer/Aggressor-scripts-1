@@ -2,8 +2,14 @@
 
 # request environment variables for every new Beacon that comes in.
 on beacon_initial {
-        #bshell($1, "set");
-	#bsleep($1,0);
+
+	## uncomment these lines if you are not 
+	## calling beacon init from another script
+	## set needs to be called so that enviroment variables can 
+	## worked with.
+
+        bshell($1, "set");
+	bsleep($1,0);
 }
 
 # parse environment vars from beacon output
@@ -60,7 +66,7 @@ alias dropads {
 	$user = binfo($1,"user");
 	$temphome = %bvars[$1]["TEMP"];
 
-	if($temphome = null) { return };
+	#if($temphome = null) { return };
 
 	$windir = %bvars[$1]["windir"];
 
