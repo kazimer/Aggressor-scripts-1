@@ -1,4 +1,4 @@
-#global('%bvars');
+global('%bvars');
 
 # request environment variables for every new Beacon that comes in.
 on beacon_initial {
